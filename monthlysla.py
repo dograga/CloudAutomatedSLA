@@ -35,13 +35,13 @@ def executesql(sql):
          log.logadd(e.message,"error")
 
 
-def insertcszone():
+def insertzone():
    sql=[[ select zones from cloud uptime table]]
    [[execute sql]]
    rows = cursor.fetchall()
    for row in rows:
       zone=row[0]
-      sql="insert [[ Monthly SLA Table fields zone, SLA%, Month, Year  ]](zone,sla,month,year) values('"+row[0]+"',0,"+str(lastMonth)+","+str(lastYear)+")"
+      sql="insert [[ Monthly SLA Table fields zone, SLA%, Month, Year  ]](zone,sla,month,year) values('"+row[0]+"',100,"+str(lastMonth)+","+str(lastYear)+")"
       [[ execute sql ]]
 
 (lastMonth,lastYear)=getLastmonthyear()
