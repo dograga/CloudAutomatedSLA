@@ -8,7 +8,7 @@ import datetime
 from calendar import monthrange
 
 
-logfile="/root/sla/log/monthlyreport_check.log"
+logfile="" ## Log file location
 log=logit.logit(logfile)
 
 def getMonthdays(year,month):
