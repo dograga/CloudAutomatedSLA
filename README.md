@@ -8,6 +8,7 @@ Cloud Automation SLA script to update uptime of cloud management service. Period
 
 ![Alt text](/cloud_uptime_sla.png?raw=true "")
 
-* Perform API login to cloud components
+* Pythong scripts to perform API login to cloud components
 * Update any downtime to SLA DB  
 * Record consolidate downtime on monthly report
+* Log output to logfile
