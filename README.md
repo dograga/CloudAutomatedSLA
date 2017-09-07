@@ -5,3 +5,5 @@ Cloud Automation SLA script to update uptime of cloud management service. Period
 1. Custom Cloud Layer
 2. Cloudstack
 3. Vcenter (Hypervisor)
+
+![Alt text](/cloud_uptime_sla.png?raw=true "")
