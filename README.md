@@ -1,4 +1,4 @@
 # CloudAutomatedSLA
-*Custom Cloud Layer
-*Cloudstack
-*Vcenter (Hypervisor)
+*Custom Cloud Layer*
+*Cloudstack*
+*Vcenter (Hypervisor)*
