@@ -4,7 +4,7 @@ Cloud Automation SLA solution check uptime of cloud management services and repo
 
 1. Custom Cloud Layer
 2. Cloudstack
-3. Vcenter (Hyp
+3. Vcenter (Hypervisor)
 
 ![Alt text](/cloud_uptime_sla.png?raw=true "")
 
