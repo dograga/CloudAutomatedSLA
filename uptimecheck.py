@@ -28,7 +28,7 @@ class cloudsla():
        self.updatedate=d.strftime("%a %b %d %H:%M:%S %Y %Z")
        failcount=2           ## Failure count threshold above which SLA will be calculated
        self.failedzones={}
-       sql="select zone,lastupdated,failurecount,comment from [[cloud status table]]  where failurecount>"+str(failcount)  ##Find all cloud region where failure breached threshold
+       sql="select zone,lastupdated,failurecount,comment from cloud_status  where failurecount>"+str(failcount)  ##Find all cloud region where failure breached threshold
        cursor=self.executesql(sql)
        if cursor.rowcount:
            rows=cursor.fetchall()
@@ -60,7 +60,7 @@ class cloudsla():
         return state
 
     def allsitesdown(self,comment):
-        sql="update [[cloud status table]] set status='DOWN',failurecount=failurecount+1,lastupdated='"+str(self.updatedate)+"',comment='"+comment+"'"
+        sql="update cloud_status set status='DOWN',failurecount=failurecount+1,lastupdated='"+str(self.updatedate)+"',comment='"+comment+"'"
         try:
             self.executesql(sql)
         except:
@@ -78,7 +78,7 @@ class cloudsla():
         msg="Downtime End: "+str(self.failedzones[zone][0])+" FailureCount: "+str(self.failedzones[zone][1])+"DowntimeStart="+downtimestart
         log.logadd(msg,"info")
         try:
-           sql="insert into [[ Downtime Tracker table ]](zone,downtimestart,downtimeend,comment,durationmin) values ('"+zone+"','"+str(downtimestart)+"','"+str(downtimeend)+"','"+comment+"',"+str(downduration)+")"
+           sql="insert into cloud_downtime_tracker(zone,downtimestart,downtimeend,comment,durationmin) values ('"+zone+"','"+str(downtimestart)+"','"+str(downtimeend)+"','"+comment+"',"+str(downduration)+")"
            print sql
            self.executesql(sql)
         except Exception as e:
@@ -106,14 +106,14 @@ class cloudsla():
             log.logadd(msg,"info")
             if zone in self.failedzones:      ## Update downtime tracker if uptime followed by failure
                 self.updateslatracker(zone)
-            sql="update [[cloud status table]] set status='UP',failurecount=0,lastupdated='"+str(self.updatedate)+"',comment='"+comment+"' where zone='"+zone+"'"
+            sql="update cloud_status set status='UP',failurecount=0,lastupdated='"+str(self.updatedate)+"',comment='"+comment+"' where zone='"+zone+"'"
         except Exception as e:
             msg="Caught exception : " + str(e)
             log.logadd(msg,"error")
             msg="Vcenter Failed "+vc
             log.logadd(msg,"error")
-            comment=str(e.args)
-            sql="update [[cloud status table]] set status='DOWN',failurecount=failurecount+1,lastupdated='"+str(self.updatedate)+"',comment='"+comment+"' where zone='"+zone+"'"
+            comment=msg
+            sql="update cloud_status set status='DOWN',failurecount=failurecount+1,lastupdated='"+str(self.updatedate)+"',comment='"+comment+"' where zone='"+zone+"'"
         self.executesql(sql)
         try:
             Disconnect(vc)
